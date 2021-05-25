@@ -4,6 +4,7 @@ import { User } from './entities/User'
 import { Exception } from './utils'
 import { Character } from './entities/Character'
 import { Planet } from './entities/Planet'
+import jwt from 'jsonwebtoken'
 
 export const createUser = async (req: Request, res:Response): Promise<Response> =>{
 
@@ -23,8 +24,8 @@ export const createUser = async (req: Request, res:Response): Promise<Response> 
 }
 
 export const getUsers = async (req: Request, res: Response): Promise<Response> =>{
-		const users = await getRepository(User).find();
-		return res.json(users);
+		const user = await getRepository(User).find();
+		return res.json(user);
 }
 
 export const updateUser = async (req: Request, res:Response): Promise<Response> =>{
@@ -35,6 +36,16 @@ export const updateUser = async (req: Request, res:Response): Promise<Response> 
         return res.json(results);
     }
 	return res.status(404).json({msg: "No user found."});
+}
+
+export const deleteUsers = async (req: Request, res: Response): Promise<Response> =>{
+    const users = await getRepository(User).findOne(req.params.id);
+    if(!users) {
+        return res.json({ msg :"This user doesn't exist."});
+    }else {
+    const users = await getRepository(User).delete(req.params.id);
+		return res.json(users);
+    }	
 }
 
 export const createPeople = async (req: Request, res:Response): Promise<Response> =>{
@@ -110,4 +121,22 @@ export const updatePlanets = async (req: Request, res:Response): Promise<Respons
 	planetRepo.merge(planet, req.body); 
 	const results = await planetRepo.save(planet);
 	return res.json(results);
+}
+
+export const login = async (req: Request, res: Response): Promise<Response> =>{
+		
+	if(!req.body.email) throw new Exception("Please specify an email on your request body", 400)
+	if(!req.body.password) throw new Exception("Please specify a password on your request body", 400)
+
+	const userRepo = await getRepository(User)
+
+	// We need to validate that a user with this email and password exists in the DB
+	const user = await userRepo.findOne({ where: { email: req.body.email, password: req.body.password }})
+	if(!user) throw new Exception("Invalid email or password", 401)
+
+	// this is the most important line in this function, it create a JWT token
+	const token = jwt.sign({ user }, process.env.JWT_KEY as string, { expiresIn: 60 * 60 });
+	
+	// return the user and the recently created token to the client
+	return res.json({ user, token });
 }
