@@ -32,7 +32,7 @@ const verifyToken= (req: Request,res:Response, next:NextFunction) =>{
     next()
 }
 
-router.get('/users',verifyToken, safe(actions.getUsers));
+router.get('/users', verifyToken, safe(actions.getUsers));
 router.post('/people', verifyToken,  safe(actions.createPeople));
 router.put('/people/:id', verifyToken, safe(actions.updatePeople));
 router.delete('/users/:id', safe(actions.deleteUsers));
