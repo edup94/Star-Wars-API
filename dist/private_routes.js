@@ -39,5 +39,7 @@ var actions_1 = require("./actions");
 var router = express_1.Router();
 router.get('/users', utils_1.safe(actions.getUsers));
 router.post('/people', utils_1.safe(actions_1.createPeople));
+router.put('/people/:id', utils_1.safe(actions_1.updatePeople));
 router.post('/planets', utils_1.safe(actions_1.createPlanets));
+router.put('/planets/:id', utils_1.safe(actions_1.updatePlanets));
 exports["default"] = router;

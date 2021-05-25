@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getPlanetById = exports.getPlanets = exports.createPlanets = exports.getPeopleById = exports.getPeople = exports.createPeople = exports.getUsers = exports.createUser = void 0;
+exports.updatePlanets = exports.getPlanetById = exports.getPlanets = exports.createPlanets = exports.updatePeople = exports.getPeopleById = exports.getPeople = exports.createPeople = exports.updateUser = exports.getUsers = exports.createUser = void 0;
 var typeorm_1 = require("typeorm"); // getRepository"  traer una tabla de la base de datos asociada al objeto
 var User_1 = require("./entities/User");
 var utils_1 = require("./utils");
@@ -82,6 +82,24 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getUsers = getUsers;
+var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(User_1.User).findOne(req.params.id)];
+            case 1:
+                user = _a.sent();
+                if (!user) return [3 /*break*/, 3];
+                typeorm_1.getRepository(User_1.User).merge(user, req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(User_1.User).save(user)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+            case 3: return [2 /*return*/, res.status(404).json({ msg: "No user found." })];
+        }
+    });
+}); };
+exports.updateUser = updateUser;
 var createPeople = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var newChar, results;
     return __generator(this, function (_a) {
@@ -138,6 +156,26 @@ var getPeopleById = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getPeopleById = getPeopleById;
+var updatePeople = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var charRepo, char, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                charRepo = typeorm_1.getRepository(Character_1.Character);
+                return [4 /*yield*/, charRepo.findOne(req.params.id)];
+            case 1:
+                char = _a.sent();
+                if (!char)
+                    throw new utils_1.Exception("Character with this id doesn't exist.");
+                charRepo.merge(char, req.body);
+                return [4 /*yield*/, charRepo.save(char)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+        }
+    });
+}); };
+exports.updatePeople = updatePeople;
 var createPlanets = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var newPlanet, results;
     return __generator(this, function (_a) {
@@ -196,3 +234,23 @@ var getPlanetById = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getPlanetById = getPlanetById;
+var updatePlanets = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var planetRepo, planet, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                planetRepo = typeorm_1.getRepository(Planet_1.Planet);
+                return [4 /*yield*/, planetRepo.findOne(req.params.id)];
+            case 1:
+                planet = _a.sent();
+                if (!planet)
+                    throw new utils_1.Exception("Planet with this id doesn't exist.");
+                planetRepo.merge(planet, req.body);
+                return [4 /*yield*/, planetRepo.save(planet)];
+            case 2:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+        }
+    });
+}); };
+exports.updatePlanets = updatePlanets;

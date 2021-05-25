@@ -27,6 +27,16 @@ export const getUsers = async (req: Request, res: Response): Promise<Response> =
 		return res.json(users);
 }
 
+export const updateUser = async (req: Request, res:Response): Promise<Response> =>{
+    const user = await getRepository(User).findOne(req.params.id);
+	if(user) {
+        getRepository(User).merge(user, req.body);
+        const results = await getRepository(User).save(user);
+        return res.json(results);
+    }
+	return res.status(404).json({msg: "No user found."});
+}
+
 export const createPeople = async (req: Request, res:Response): Promise<Response> =>{
 
 	if(!req.body.name) throw new Exception("Please provide a name")
@@ -52,6 +62,16 @@ export const getPeopleById = async (req: Request, res: Response): Promise<Respon
         const people = await getRepository(Character).findOne(req.params.id);
         if(!people) throw new Exception("Character with this Id doesn't exist.");
 		return res.json(people);
+}
+
+export const updatePeople = async (req: Request, res:Response): Promise<Response> =>{
+    const charRepo = getRepository(Character) 
+	const char = await charRepo.findOne(req.params.id);
+	if(!char) throw new Exception("Character with this id doesn't exist.");
+	
+	charRepo.merge(char, req.body); 
+	const results = await charRepo.save(char);
+	return res.json(results);
 }
 
 export const createPlanets = async (req: Request, res:Response): Promise<Response> =>{
@@ -80,4 +100,14 @@ export const getPlanetById = async (req: Request, res: Response): Promise<Respon
         const planet = await getRepository(Planet).findOne(req.params.id);
         if(!planet) throw new Exception("Planet with this Id doesn't exist.");
 		return res.json(planet);
+}
+
+export const updatePlanets = async (req: Request, res:Response): Promise<Response> =>{
+    const planetRepo = getRepository(Planet) 
+	const planet = await planetRepo.findOne(req.params.id);
+	if(!planet) throw new Exception("Planet with this id doesn't exist.");
+	
+	planetRepo.merge(planet, req.body); 
+	const results = await planetRepo.save(planet);
+	return res.json(results);
 }

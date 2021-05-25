@@ -14,13 +14,15 @@
 import { Router } from 'express';
 import { safe } from './utils';
 import * as actions from './actions';
-import { createPeople, createPlanets } from './actions';
+import { createPeople, createPlanets, updatePeople, updatePlanets } from './actions';
 
 // declare a new router to include all the endpoints
 const router = Router();
 
 router.get('/users', safe(actions.getUsers));
 router.post('/people', safe(createPeople));
+router.put('/people/:id', safe(updatePeople));
 router.post('/planets', safe(createPlanets));
+router.put('/planets/:id', safe(updatePlanets));
 
 export default router;
