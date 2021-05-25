@@ -8,31 +8,31 @@ export class Planet extends BaseEntity {
     ID: number
 
     @Column()
-    Name: string
+    name: string
 
     @Column()
-    Diameter: number
+    diameter: number
 
     @Column()
-    RotationPeriod: number
+    rotationPeriod: number
 
     @Column()
-    Gravity: number
+    gravity: number
 
     @Column()
-    Population: number
+    population: number
 
     @Column()
     Climate: string
 
     @Column()
-    Terrain: string
+    terrain: string
 
     @Column()
-    SurfaceWater: number
+    surfaceWater: number
 
     @Column()
-    ImgUrl: string
+    imgUrl: string
 
     @OneToMany(() => Character, character => character.planet)
     characters: Character[];

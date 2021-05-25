@@ -8,34 +8,34 @@ export class Character extends BaseEntity {
     ID: number
 
     @Column()
-    Name: string
+    name: string
 
     @Column()
-    Height: number
+    height: number
 
     @Column()
-    Mass: number
+    mass: number
 
     @Column()
-    HairColor: string
+    hairColor: string
 
     @Column()
-    SkinColor: string
+    skinColor: string
 
     @Column()
-    EyeColor: string
+    eyeColor: string
 
     @Column()
-    BirthYear: string
+    birthYear: string
 
     @Column()
-    Gender: string
+    gender: string
 
     @Column()
-    Homeworld: string
+    homeworld: string
 
     @Column()
-    ImgUrl: string
+    imgUrl: string
 
     @ManyToOne(() => Planet, planet => planet.characters)
     planet: Planet;

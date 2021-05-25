@@ -26,7 +26,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 exports.__esModule = true;
 exports.Planet = void 0;
 var typeorm_1 = require("typeorm");
-var Users_1 = require("./Users");
+var Character_1 = require("./Character");
 var Planet = /** @class */ (function (_super) {
     __extends(Planet, _super);
     function Planet() {
@@ -35,19 +35,47 @@ var Planet = /** @class */ (function (_super) {
     __decorate([
         typeorm_1.PrimaryGeneratedColumn(),
         __metadata("design:type", Number)
-    ], Planet.prototype, "id");
+    ], Planet.prototype, "ID");
     __decorate([
-        typeorm_1.Column({ unique: true }),
+        typeorm_1.Column(),
         __metadata("design:type", String)
     ], Planet.prototype, "name");
     __decorate([
-        typeorm_1.Column({ nullable: true }),
-        __metadata("design:type", String)
-    ], Planet.prototype, "picture_url");
+        typeorm_1.Column(),
+        __metadata("design:type", Number)
+    ], Planet.prototype, "diameter");
     __decorate([
-        typeorm_1.ManyToMany(function () { return Users_1.Users; }, function (user) { return user.planets; }),
+        typeorm_1.Column(),
+        __metadata("design:type", Number)
+    ], Planet.prototype, "rotationPeriod");
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", Number)
+    ], Planet.prototype, "gravity");
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", Number)
+    ], Planet.prototype, "population");
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", String)
+    ], Planet.prototype, "Climate");
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", String)
+    ], Planet.prototype, "terrain");
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", Number)
+    ], Planet.prototype, "surfaceWater");
+    __decorate([
+        typeorm_1.Column(),
+        __metadata("design:type", String)
+    ], Planet.prototype, "imgUrl");
+    __decorate([
+        typeorm_1.OneToMany(function () { return Character_1.Character; }, function (character) { return character.planet; }),
         __metadata("design:type", Array)
-    ], Planet.prototype, "users");
+    ], Planet.prototype, "characters");
     Planet = __decorate([
         typeorm_1.Entity()
     ], Planet);

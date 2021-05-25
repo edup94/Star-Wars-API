@@ -36,10 +36,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getUsers = exports.createUser = void 0;
+exports.getPeopleById = exports.getPeople = exports.createPeople = exports.getUsers = exports.createUser = void 0;
 var typeorm_1 = require("typeorm"); // getRepository"  traer una tabla de la base de datos asociada al objeto
-var Users_1 = require("./entities/Users");
+var User_1 = require("./entities/User");
 var utils_1 = require("./utils");
+var Character_1 = require("./entities/Character");
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var userRepo, user, newUser, results;
     return __generator(this, function (_a) {
@@ -54,14 +55,14 @@ var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                     throw new utils_1.Exception("Please provide an email");
                 if (!req.body.password)
                     throw new utils_1.Exception("Please provide a password");
-                userRepo = typeorm_1.getRepository(Users_1.Users);
+                userRepo = typeorm_1.getRepository(User_1.User);
                 return [4 /*yield*/, userRepo.findOne({ where: { email: req.body.email } })];
             case 1:
                 user = _a.sent();
                 if (user)
                     throw new utils_1.Exception("Users already exists with this email");
-                newUser = typeorm_1.getRepository(Users_1.Users).create(req.body);
-                return [4 /*yield*/, typeorm_1.getRepository(Users_1.Users).save(newUser)];
+                newUser = typeorm_1.getRepository(User_1.User).create(req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(User_1.User).save(newUser)];
             case 2:
                 results = _a.sent();
                 return [2 /*return*/, res.json(results)];
@@ -73,7 +74,7 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     var users;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, typeorm_1.getRepository(Users_1.Users).find()];
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(User_1.User).find()];
             case 1:
                 users = _a.sent();
                 return [2 /*return*/, res.json(users)];
@@ -81,3 +82,61 @@ var getUsers = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
     });
 }); };
 exports.getUsers = getUsers;
+var createPeople = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var newChar, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!req.body.name)
+                    throw new utils_1.Exception("Please provide a name");
+                if (!req.body.height)
+                    throw new utils_1.Exception("Please provide a height");
+                if (!req.body.mass)
+                    throw new utils_1.Exception("Please provide a mass");
+                if (!req.body.hairColor)
+                    throw new utils_1.Exception("Please provide a hair color");
+                if (!req.body.skinColor)
+                    throw new utils_1.Exception("Please provide a skin color");
+                if (!req.body.eyeColor)
+                    throw new utils_1.Exception("Please provide an eye color");
+                if (!req.body.birthYear)
+                    throw new utils_1.Exception("Please provide a birth year");
+                if (!req.body.gender)
+                    throw new utils_1.Exception("Please provide a gender");
+                if (!req.body.homeworld)
+                    throw new utils_1.Exception("Please provide a homeworld");
+                newChar = typeorm_1.getRepository(Character_1.Character).create(req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(Character_1.Character).save(newChar)];
+            case 1:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+        }
+    });
+}); };
+exports.createPeople = createPeople;
+var getPeople = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var people;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Character_1.Character).find()];
+            case 1:
+                people = _a.sent();
+                return [2 /*return*/, res.json(people)];
+        }
+    });
+}); };
+exports.getPeople = getPeople;
+var getPeopleById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var people;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Character_1.Character).findOne(req.params.id)];
+            case 1:
+                people = _a.sent();
+                if (!people)
+                    throw new utils_1.Exception("Character with this Id doesn't exist.");
+                return [2 /*return*/, res.json(people)];
+        }
+    });
+}); };
+exports.getPeopleById = getPeopleById;

@@ -14,10 +14,12 @@
 import { Router } from 'express';
 import { safe } from './utils';
 import * as actions from './actions';
+import { createPeople } from './actions';
 
 // declare a new router to include all the endpoints
 const router = Router();
 
 router.get('/user', safe(actions.getUsers));
+router.post('/people', safe(createPeople));
 
 export default router;

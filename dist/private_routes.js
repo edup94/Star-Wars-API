@@ -34,7 +34,9 @@ exports.__esModule = true;
 var express_1 = require("express");
 var utils_1 = require("./utils");
 var actions = __importStar(require("./actions"));
+var actions_1 = require("./actions");
 // declare a new router to include all the endpoints
 var router = express_1.Router();
 router.get('/user', utils_1.safe(actions.getUsers));
+router.post('/people', utils_1.safe(actions_1.createPeople));
 exports["default"] = router;
