@@ -8,13 +8,15 @@
  */
 import { Router } from 'express';
 import { safe } from './utils';
-import { createUser, getPeople, getPeopleById } from './actions';
+import { createUser, getPeople, getPeopleById, getPlanets, getPlanetById } from './actions';
 
 const router = Router();
 
 // signup route, creates a new user in the DB
-router.post('/user', safe(createUser));
+router.post('/users', safe(createUser));
 router.get('/people', safe(getPeople));
 router.get('/people/:id', safe(getPeopleById));
+router.get('/planets', safe(getPlanets));
+router.get('/planets/:id', safe(getPlanetById));
 
 export default router;

@@ -36,17 +36,17 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-exports.getPeopleById = exports.getPeople = exports.createPeople = exports.getUsers = exports.createUser = void 0;
+exports.getPlanetById = exports.getPlanets = exports.createPlanets = exports.getPeopleById = exports.getPeople = exports.createPeople = exports.getUsers = exports.createUser = void 0;
 var typeorm_1 = require("typeorm"); // getRepository"  traer una tabla de la base de datos asociada al objeto
 var User_1 = require("./entities/User");
 var utils_1 = require("./utils");
 var Character_1 = require("./entities/Character");
+var Planet_1 = require("./entities/Planet");
 var createUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var userRepo, user, newUser, results;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                // important validations to avoid ambiguos errors, the client needs to understand what went wrong
                 if (!req.body.first_name)
                     throw new utils_1.Exception("Please provide a first_name");
                 if (!req.body.last_name)
@@ -103,8 +103,6 @@ var createPeople = function (req, res) { return __awaiter(void 0, void 0, void 0
                     throw new utils_1.Exception("Please provide a birth year");
                 if (!req.body.gender)
                     throw new utils_1.Exception("Please provide a gender");
-                if (!req.body.homeworld)
-                    throw new utils_1.Exception("Please provide a homeworld");
                 newChar = typeorm_1.getRepository(Character_1.Character).create(req.body);
                 return [4 /*yield*/, typeorm_1.getRepository(Character_1.Character).save(newChar)];
             case 1:
@@ -140,3 +138,61 @@ var getPeopleById = function (req, res) { return __awaiter(void 0, void 0, void 
     });
 }); };
 exports.getPeopleById = getPeopleById;
+var createPlanets = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var newPlanet, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!req.body.name)
+                    throw new utils_1.Exception("Please provide a name");
+                if (!req.body.diameter)
+                    throw new utils_1.Exception("Please provide a diameter");
+                if (!req.body.rotationPeriod)
+                    throw new utils_1.Exception("Please provide a rotation period");
+                if (!req.body.orbitalPeriod)
+                    throw new utils_1.Exception("Please provide an orbital period");
+                if (!req.body.gravity)
+                    throw new utils_1.Exception("Please provide gravity");
+                if (!req.body.population)
+                    throw new utils_1.Exception("Please provide population");
+                if (!req.body.climate)
+                    throw new utils_1.Exception("Please provide climate");
+                if (!req.body.terrain)
+                    throw new utils_1.Exception("Please provide terrain");
+                if (!req.body.surfaceWater)
+                    throw new utils_1.Exception("Please provide surface water");
+                newPlanet = typeorm_1.getRepository(Planet_1.Planet).create(req.body);
+                return [4 /*yield*/, typeorm_1.getRepository(Planet_1.Planet).save(newPlanet)];
+            case 1:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+        }
+    });
+}); };
+exports.createPlanets = createPlanets;
+var getPlanets = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var planet;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Planet_1.Planet).find()];
+            case 1:
+                planet = _a.sent();
+                return [2 /*return*/, res.json(planet)];
+        }
+    });
+}); };
+exports.getPlanets = getPlanets;
+var getPlanetById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var planet;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(Planet_1.Planet).findOne(req.params.id)];
+            case 1:
+                planet = _a.sent();
+                if (!planet)
+                    throw new utils_1.Exception("Planet with this Id doesn't exist.");
+                return [2 /*return*/, res.json(planet)];
+        }
+    });
+}); };
+exports.getPlanetById = getPlanetById;

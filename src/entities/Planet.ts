@@ -5,7 +5,7 @@ import { Character } from "./Character";
 export class Planet extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    ID: number
+    id: number
 
     @Column()
     name: string
@@ -17,13 +17,13 @@ export class Planet extends BaseEntity {
     rotationPeriod: number
 
     @Column()
-    gravity: number
+    gravity: string
 
     @Column()
     population: number
 
     @Column()
-    Climate: string
+    climate: string
 
     @Column()
     terrain: string

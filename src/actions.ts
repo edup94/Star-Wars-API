@@ -3,10 +3,10 @@ import { getRepository } from 'typeorm'  // getRepository"  traer una tabla de l
 import { User } from './entities/User'
 import { Exception } from './utils'
 import { Character } from './entities/Character'
+import { Planet } from './entities/Planet'
 
 export const createUser = async (req: Request, res:Response): Promise<Response> =>{
 
-	// important validations to avoid ambiguos errors, the client needs to understand what went wrong
 	if(!req.body.first_name) throw new Exception("Please provide a first_name")
 	if(!req.body.last_name) throw new Exception("Please provide a last_name")
 	if(!req.body.email) throw new Exception("Please provide an email")
@@ -37,7 +37,6 @@ export const createPeople = async (req: Request, res:Response): Promise<Response
     if(!req.body.eyeColor) throw new Exception("Please provide an eye color")
     if(!req.body.birthYear) throw new Exception("Please provide a birth year")
     if(!req.body.gender) throw new Exception("Please provide a gender")
-    if(!req.body.homeworld) throw new Exception("Please provide a homeworld")
     
 	const newChar = getRepository(Character).create(req.body);  
 	const results = await getRepository(Character).save(newChar);
@@ -53,4 +52,32 @@ export const getPeopleById = async (req: Request, res: Response): Promise<Respon
         const people = await getRepository(Character).findOne(req.params.id);
         if(!people) throw new Exception("Character with this Id doesn't exist.");
 		return res.json(people);
+}
+
+export const createPlanets = async (req: Request, res:Response): Promise<Response> =>{
+
+	if(!req.body.name) throw new Exception("Please provide a name")
+	if(!req.body.diameter) throw new Exception("Please provide a diameter")
+	if(!req.body.rotationPeriod) throw new Exception("Please provide a rotation period")
+    if(!req.body.orbitalPeriod) throw new Exception("Please provide an orbital period")
+    if(!req.body.gravity) throw new Exception("Please provide gravity")
+    if(!req.body.population) throw new Exception("Please provide population")
+    if(!req.body.climate) throw new Exception("Please provide climate")
+    if(!req.body.terrain) throw new Exception("Please provide terrain")
+    if(!req.body.surfaceWater) throw new Exception("Please provide surface water")
+    
+	const newPlanet = getRepository(Planet).create(req.body);  
+	const results = await getRepository(Planet).save(newPlanet);
+	return res.json(results);
+}
+
+export const getPlanets = async (req: Request, res: Response): Promise<Response> =>{
+		const planet = await getRepository(Planet).find();
+		return res.json(planet);
+}
+
+export const getPlanetById = async (req: Request, res: Response): Promise<Response> =>{
+        const planet = await getRepository(Planet).findOne(req.params.id);
+        if(!planet) throw new Exception("Planet with this Id doesn't exist.");
+		return res.json(planet);
 }

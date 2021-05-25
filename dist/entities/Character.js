@@ -35,7 +35,7 @@ var Character = /** @class */ (function (_super) {
     __decorate([
         typeorm_1.PrimaryGeneratedColumn(),
         __metadata("design:type", Number)
-    ], Character.prototype, "ID");
+    ], Character.prototype, "id");
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)

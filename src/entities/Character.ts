@@ -5,7 +5,7 @@ import { Planet } from "./Planet";
 export class Character extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    ID: number
+    id: number
 
     @Column()
     name: string

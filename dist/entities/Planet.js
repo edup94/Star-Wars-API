@@ -35,7 +35,7 @@ var Planet = /** @class */ (function (_super) {
     __decorate([
         typeorm_1.PrimaryGeneratedColumn(),
         __metadata("design:type", Number)
-    ], Planet.prototype, "ID");
+    ], Planet.prototype, "id");
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
@@ -50,7 +50,7 @@ var Planet = /** @class */ (function (_super) {
     ], Planet.prototype, "rotationPeriod");
     __decorate([
         typeorm_1.Column(),
-        __metadata("design:type", Number)
+        __metadata("design:type", String)
     ], Planet.prototype, "gravity");
     __decorate([
         typeorm_1.Column(),
@@ -59,7 +59,7 @@ var Planet = /** @class */ (function (_super) {
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
-    ], Planet.prototype, "Climate");
+    ], Planet.prototype, "climate");
     __decorate([
         typeorm_1.Column(),
         __metadata("design:type", String)
