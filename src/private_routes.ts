@@ -38,5 +38,6 @@ router.put('/people/:id', verifyToken, safe(actions.updatePeople));
 router.delete('/users/:id', safe(actions.deleteUsers));
 router.post('/planets', verifyToken, safe(actions.createPlanets));
 router.put('/planets/:id', verifyToken, safe(actions.updatePlanets));
+router.post('/addFav/:userid/:planetid', verifyToken, safe(actions.addFavPlanet));
 
 export default router;

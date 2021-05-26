@@ -27,6 +27,7 @@ exports.__esModule = true;
 exports.Character = void 0;
 var typeorm_1 = require("typeorm");
 var Planet_1 = require("./Planet");
+var User_1 = require("./User");
 var Character = /** @class */ (function (_super) {
     __extends(Character, _super);
     function Character() {
@@ -76,6 +77,11 @@ var Character = /** @class */ (function (_super) {
         typeorm_1.Column(),
         __metadata("design:type", String)
     ], Character.prototype, "imgUrl");
+    __decorate([
+        typeorm_1.ManyToMany(function () { return User_1.User; }, function (user) { return user.characters; }),
+        typeorm_1.JoinTable(),
+        __metadata("design:type", Array)
+    ], Character.prototype, "users");
     __decorate([
         typeorm_1.ManyToOne(function () { return Planet_1.Planet; }, function (planet) { return planet.characters; }),
         __metadata("design:type", Planet_1.Planet)

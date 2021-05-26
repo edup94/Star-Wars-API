@@ -35,11 +35,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.login = exports.updatePlanets = exports.getPlanetById = exports.getPlanets = exports.createPlanets = exports.updatePeople = exports.getPeopleById = exports.getPeople = exports.createPeople = exports.deleteUsers = exports.updateUser = exports.getUsers = exports.createUser = void 0;
+exports.addFavPlanet = exports.login = exports.updatePlanets = exports.getPlanetById = exports.getPlanets = exports.createPlanets = exports.updatePeople = exports.getPeopleById = exports.getPeople = exports.createPeople = exports.deleteUsers = exports.updateUser = exports.getUsers = exports.createUser = void 0;
 var typeorm_1 = require("typeorm"); // getRepository"  traer una tabla de la base de datos asociada al objeto
 var User_1 = require("./entities/User");
 var utils_1 = require("./utils");
@@ -301,3 +306,27 @@ var login = function (req, res) { return __awaiter(void 0, void 0, void 0, funct
     });
 }); };
 exports.login = login;
+var addFavPlanet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var planetRepo, userRepo, user, planet, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                planetRepo = typeorm_1.getRepository(Planet_1.Planet);
+                userRepo = typeorm_1.getRepository(User_1.User);
+                return [4 /*yield*/, userRepo.findOne(req.params.userid, { relations: ["planets"] })];
+            case 1:
+                user = _a.sent();
+                return [4 /*yield*/, planetRepo.findOne(req.params.planetid)];
+            case 2:
+                planet = _a.sent();
+                if (!(user && planet)) return [3 /*break*/, 4];
+                user.planets = __spreadArray(__spreadArray([], user.planets), [planet]);
+                return [4 /*yield*/, userRepo.save(user)];
+            case 3:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+            case 4: return [2 /*return*/, res.json("Error")];
+        }
+    });
+}); };
+exports.addFavPlanet = addFavPlanet;

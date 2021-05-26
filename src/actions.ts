@@ -140,3 +140,16 @@ export const login = async (req: Request, res: Response): Promise<Response> =>{
 	// return the user and the recently created token to the client
 	return res.json({ user, token });
 }
+
+export const addFavPlanet = async (req: Request, res: Response): Promise<Response> => {
+    const planetRepo = getRepository(Planet)
+    const userRepo = getRepository(User)
+    const user = await userRepo.findOne(req.params.userid, {relations:["planets"]})
+    const planet = await planetRepo.findOne(req.params.planetid)
+    if (user && planet) {
+        user.planets = [...user.planets,planet]
+        const results = await userRepo.save(user)
+        return res.json(results)
+    }
+    return res.json("Error")
+}

@@ -19,11 +19,11 @@ export class User extends BaseEntity{
   @Column()
   password: string;
 
-    @ManyToMany(() => Planet)
-    @JoinTable()
+    @ManyToMany(() => Planet, planet => planet.users, {
+        cascade: true
+    })
     planets: Planet[];
 
-    @ManyToMany(() => Character)
-    @JoinTable()
+    @ManyToMany(() => Character, character => character.users)
     characters: Character[];
 }

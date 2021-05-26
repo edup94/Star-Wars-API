@@ -54,13 +54,13 @@ var User = /** @class */ (function (_super) {
         __metadata("design:type", String)
     ], User.prototype, "password");
     __decorate([
-        typeorm_1.ManyToMany(function () { return Planet_1.Planet; }),
-        typeorm_1.JoinTable(),
+        typeorm_1.ManyToMany(function () { return Planet_1.Planet; }, function (planet) { return planet.users; }, {
+            cascade: true
+        }),
         __metadata("design:type", Array)
     ], User.prototype, "planets");
     __decorate([
-        typeorm_1.ManyToMany(function () { return Character_1.Character; }),
-        typeorm_1.JoinTable(),
+        typeorm_1.ManyToMany(function () { return Character_1.Character; }, function (character) { return character.users; }),
         __metadata("design:type", Array)
     ], User.prototype, "characters");
     User = __decorate([
