@@ -153,3 +153,42 @@ export const addFavPlanet = async (req: Request, res: Response): Promise<Respons
     }
     return res.json("Error")
 }
+
+export const deleteFavPlanet = async (req: Request, res: Response): Promise<Response> => {
+    const user = await getRepository(User).findOne({relations:["planets"], where:{id: req.params.userid}});
+    const planetToDelete = await getRepository(Planet).findOne({where: {id: req.params.planetid}})
+    let result:any = { error: "User or planet doesn't exist"};
+    if( user && planetToDelete){
+        user.planets = user.planets.filter( planet => {
+            return planet.id !== planetToDelete.id;
+        })
+        result = await getRepository(User).save(user);
+    }
+    return res.json(result)
+}
+
+export const addFavPeople = async (req: Request, res: Response): Promise<Response> => {
+    const characterRepo = getRepository(Character)
+    const userRepo = getRepository(User)
+    const user = await userRepo.findOne(req.params.userid, {relations:["characters"]})
+    const character = await characterRepo.findOne(req.params.characterid)
+    if (user && character) {
+        user.characters = [...user.characters,character]
+        const results = await userRepo.save(user)
+        return res.json(results)
+    }
+    return res.json("Error")
+}
+
+export const deleteFavPeople = async (req: Request, res: Response): Promise<Response> => {
+    const user = await getRepository(User).findOne({relations:["characters"], where:{id: req.params.userid}});
+    const characterToDelete = await getRepository(Character).findOne({where: {id: req.params.characterid}})
+    let result:any = { error: "user or character doesn't exist"};
+    if( user && characterToDelete){
+        user.characters = user.characters.filter( character => {
+            return character.id !== characterToDelete.id;
+        })
+        result = await getRepository(User).save(user);
+    }
+    return res.json(result)
+}

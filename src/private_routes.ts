@@ -38,6 +38,9 @@ router.put('/people/:id', verifyToken, safe(actions.updatePeople));
 router.delete('/users/:id', safe(actions.deleteUsers));
 router.post('/planets', verifyToken, safe(actions.createPlanets));
 router.put('/planets/:id', verifyToken, safe(actions.updatePlanets));
-router.post('/addFav/:userid/:planetid', verifyToken, safe(actions.addFavPlanet));
+router.post('/favPlanets/:userid/:planetid', verifyToken, safe(actions.addFavPlanet));
+router.delete('/favPlanets/:userid/:planetid', verifyToken, safe(actions.deleteFavPlanet));
+router.post('/favCharacters/:userid/:characterid', verifyToken, safe(actions.addFavPeople));
+router.delete('/favCharacters/:userid/:characterid', verifyToken, safe(actions.deleteFavPeople));
 
 export default router;

@@ -24,6 +24,8 @@ export class User extends BaseEntity{
     })
     planets: Planet[];
 
-    @ManyToMany(() => Character, character => character.users)
+    @ManyToMany(() => Character, character => character.users, {
+        cascade: true
+    })
     characters: Character[];
 }

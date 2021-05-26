@@ -60,7 +60,9 @@ var User = /** @class */ (function (_super) {
         __metadata("design:type", Array)
     ], User.prototype, "planets");
     __decorate([
-        typeorm_1.ManyToMany(function () { return Character_1.Character; }, function (character) { return character.users; }),
+        typeorm_1.ManyToMany(function () { return Character_1.Character; }, function (character) { return character.users; }, {
+            cascade: true
+        }),
         __metadata("design:type", Array)
     ], User.prototype, "characters");
     User = __decorate([

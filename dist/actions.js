@@ -44,7 +44,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 exports.__esModule = true;
-exports.addFavPlanet = exports.login = exports.updatePlanets = exports.getPlanetById = exports.getPlanets = exports.createPlanets = exports.updatePeople = exports.getPeopleById = exports.getPeople = exports.createPeople = exports.deleteUsers = exports.updateUser = exports.getUsers = exports.createUser = void 0;
+exports.deleteFavPeople = exports.addFavPeople = exports.deleteFavPlanet = exports.addFavPlanet = exports.login = exports.updatePlanets = exports.getPlanetById = exports.getPlanets = exports.createPlanets = exports.updatePeople = exports.getPeopleById = exports.getPeople = exports.createPeople = exports.deleteUsers = exports.updateUser = exports.getUsers = exports.createUser = void 0;
 var typeorm_1 = require("typeorm"); // getRepository"  traer una tabla de la base de datos asociada al objeto
 var User_1 = require("./entities/User");
 var utils_1 = require("./utils");
@@ -330,3 +330,75 @@ var addFavPlanet = function (req, res) { return __awaiter(void 0, void 0, void 0
     });
 }); };
 exports.addFavPlanet = addFavPlanet;
+var deleteFavPlanet = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, planetToDelete, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(User_1.User).findOne({ relations: ["planets"], where: { id: req.params.userid } })];
+            case 1:
+                user = _a.sent();
+                return [4 /*yield*/, typeorm_1.getRepository(Planet_1.Planet).findOne({ where: { id: req.params.planetid } })];
+            case 2:
+                planetToDelete = _a.sent();
+                result = { error: "User or planet doesn't exist" };
+                if (!(user && planetToDelete)) return [3 /*break*/, 4];
+                user.planets = user.planets.filter(function (planet) {
+                    return planet.id !== planetToDelete.id;
+                });
+                return [4 /*yield*/, typeorm_1.getRepository(User_1.User).save(user)];
+            case 3:
+                result = _a.sent();
+                _a.label = 4;
+            case 4: return [2 /*return*/, res.json(result)];
+        }
+    });
+}); };
+exports.deleteFavPlanet = deleteFavPlanet;
+var addFavPeople = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var characterRepo, userRepo, user, character, results;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                characterRepo = typeorm_1.getRepository(Character_1.Character);
+                userRepo = typeorm_1.getRepository(User_1.User);
+                return [4 /*yield*/, userRepo.findOne(req.params.userid, { relations: ["characters"] })];
+            case 1:
+                user = _a.sent();
+                return [4 /*yield*/, characterRepo.findOne(req.params.characterid)];
+            case 2:
+                character = _a.sent();
+                if (!(user && character)) return [3 /*break*/, 4];
+                user.characters = __spreadArray(__spreadArray([], user.characters), [character]);
+                return [4 /*yield*/, userRepo.save(user)];
+            case 3:
+                results = _a.sent();
+                return [2 /*return*/, res.json(results)];
+            case 4: return [2 /*return*/, res.json("Error")];
+        }
+    });
+}); };
+exports.addFavPeople = addFavPeople;
+var deleteFavPeople = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, characterToDelete, result;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, typeorm_1.getRepository(User_1.User).findOne({ relations: ["characters"], where: { id: req.params.userid } })];
+            case 1:
+                user = _a.sent();
+                return [4 /*yield*/, typeorm_1.getRepository(Character_1.Character).findOne({ where: { id: req.params.characterid } })];
+            case 2:
+                characterToDelete = _a.sent();
+                result = { error: "user or character doesn't exist" };
+                if (!(user && characterToDelete)) return [3 /*break*/, 4];
+                user.characters = user.characters.filter(function (character) {
+                    return character.id !== characterToDelete.id;
+                });
+                return [4 /*yield*/, typeorm_1.getRepository(User_1.User).save(user)];
+            case 3:
+                result = _a.sent();
+                _a.label = 4;
+            case 4: return [2 /*return*/, res.json(result)];
+        }
+    });
+}); };
+exports.deleteFavPeople = deleteFavPeople;
